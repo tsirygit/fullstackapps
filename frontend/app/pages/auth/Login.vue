@@ -3,7 +3,13 @@
 
   <form @submit.prevent="handleSubmit">
     <input v-model="form.email" type="email" placeholder="Email" />
+    <span v-if="erreur.email" class="bg-red-600 text-sm font-semibold">
+      {{ erreur.email[0] }}</span
+    >
     <input v-model="form.password" type="password" placeholder="Mot de passe" />
+    <span v-if="erreur.password" class="bg-red-600 text-sm font-semibold">
+      {{ erreur.password[0] }}</span
+    >
 
     <button type="submit">login</button>
   </form>
@@ -17,13 +23,25 @@ const form = ref({
   password: "",
 });
 
+const erreur = ref({
+  email: [],
+  password: [],
+  message: "",
+});
+
 async function handleSubmit() {
+  
+  erreur.value = {
+    email: [],
+    password: [],
+    message: "",
+  };
+
   try {
     await $fetch("http://localhost:8000/api/csrf-cookie", {
-      method: "GET",
       credentials: "include",
     });
-    
+
     const token = useCookie("XSRF-TOKEN");
 
     const res = await $fetch("http://localhost:8000/api/login", {
@@ -36,11 +54,23 @@ async function handleSubmit() {
       },
     });
 
-    console.log("Utilisateur créé et connecté !", res);
+    console.log(res);
 
     await navigateTo("/dashboard");
+
   } catch (error) {
-    console.error("Erreur:", error.res);
+
+    console.log(error.response?._data);
+
+    if (error.response?._data?.errors) {
+
+      erreur.value = {
+        ...erreur.value,
+        ...error.response._data.errors,
+      };
+    } else {
+      erreur.value.message = error.response?._data?.message || "Erreur serveur";
+    }
   }
 }
 </script>

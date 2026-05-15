@@ -42,7 +42,7 @@ async function handleSubmit() {
       },
     });
 
-     await navigateTo('/auth/emailverification');
+    await navigateTo("/auth/emailverification");
 
     console.log("Utilisateur créé !", res);
   } catch (error) {
