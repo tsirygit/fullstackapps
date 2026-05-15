@@ -23,6 +23,7 @@ async function handleSubmit() {
       method: "GET",
       credentials: "include",
     });
+    
     const token = useCookie("XSRF-TOKEN");
 
     const res = await $fetch("http://localhost:8000/api/login", {

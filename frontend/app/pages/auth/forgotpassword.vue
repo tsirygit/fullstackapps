@@ -1,16 +1,10 @@
+t
 <template>
   <h1>register</h1>
 
   <form @submit.prevent="handleSubmit">
-    <input v-model="form.name" type="text" placeholder="Nom" />
     <input v-model="form.email" type="email" placeholder="Email" />
-    <input v-model="form.password" type="password" placeholder="Mot de passe" />
-    <input
-      v-model="form.password_confirmation"
-      type="password"
-      placeholder="Confirmer le mot de passe"
-    />
-    <button type="submit">Register</button>
+    <button type="submit">entrez votre email</button>
   </form>
 </template>
 
@@ -18,33 +12,30 @@
 import { ref } from "vue";
 
 const form = ref({
-  name: "",
   email: "",
-  password: "",
-  password_confirmation: "",
 });
 
 async function handleSubmit() {
   try {
+    
     await $fetch("http://localhost:8000/api/csrf-cookie", {
       method: "GET",
       credentials: "include",
     });
-    const token = useCookie("XSRF-TOKEN").value;
 
-    const res = await $fetch("http://localhost:8000/api/register", {
+    const token = useCookie("XSRF-TOKEN");
+
+    const res = await $fetch("http://localhost:8000/api/forgot-password", {
       method: "POST",
       body: form.value,
       credentials: "include",
       headers: {
         Accept: "application/json",
-        "X-XSRF-TOKEN": token,
+        "X-XSRF-TOKEN": token.value,
       },
     });
 
-     await navigateTo('/auth/emailverification');
-
-    console.log("Utilisateur créé !", res);
+    console.log("verification d'email ", res);
   } catch (error) {
     console.error("Erreur:", error.res);
   }
