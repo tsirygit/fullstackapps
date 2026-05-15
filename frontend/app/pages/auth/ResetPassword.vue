@@ -2,7 +2,7 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-50">
     <div class="w-full max-w-md p-6">
       <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold">Create new Account</h1>
+        <h1 class="text-2xl font-bold">Reset your password</h1>
       </div>
 
       <div class="flex justify-center">
