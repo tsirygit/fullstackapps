@@ -6,14 +6,11 @@
       </div>
       <form @submit.prevent="handleSubmit">
         <div class="mb-4">
-          <label for="email" class="block text-sm/6 font-medium py-2"
-            >Email Address</label
-          >
           <input
-            class="p-2 border border-gray-600 outline-1 w-full"
+            class="p-2 border outline-1 w-full rounded-lg"
             v-model="form.email"
             type="email"
-            placeholder="Email"
+            placeholder="Email Address"
             id="email"
           />
           <span
@@ -24,10 +21,10 @@
         </div>
         <div class="mt-6">
           <button
-            class="bg-blue-600 text-white p-2 w-full font-semibold"
+            class="bg-blue-600 text-white p-2 w-full font-semibold rounded-2xl"
             type="submit"
           >
-            enter your email
+            verification
           </button>
         </div>
       </form>

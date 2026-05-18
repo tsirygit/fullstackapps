@@ -2,20 +2,17 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-50">
     <div class="w-full max-w-md p-6">
       <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold">Login to your Account</h1>
+        <h1 class="text-2xl font-bold">Sign In to your Account</h1>
       </div>
 
       <div class="flex justify-center">
         <form @submit.prevent="handleSubmit" class="w-full max-w-xs">
           <div class="mb-4">
-            <label for="email" class="block text-sm/6 font-medium py-2"
-              >Email Address</label
-            >
             <input
-              class="p-2 border border-gray-600 outline-1 w-full"
+              class="p-2 border outline-1 w-full rounded-md"
               v-model="form.email"
               type="email"
-              placeholder="Email"
+              placeholder="Email Address"
               id="email"
             />
             <span
@@ -26,14 +23,11 @@
           </div>
 
           <div class="mb-4">
-            <label for="password" class="block text-sm/6 font-medium py-2"
-              >votre mot de passe</label
-            >
             <input
-              class="p-2 border border-gray-600 outline-1 w-full"
+              class="p-2 border outline-1 w-full rounded-md"
               v-model="form.password"
               type="password"
-              placeholder="Mot de passe"
+              placeholder="Password"
               id="password"
             />
             <span
@@ -52,7 +46,7 @@
 
           <div class="mt-6">
             <button
-              class="bg-blue-600 text-white p-2 w-full font-semibold"
+              class="bg-blue-600 text-white p-2 w-full font-semibold rounded-xl"
               type="submit"
             >
               login
@@ -103,7 +97,7 @@ async function handleSubmit() {
     });
 
     console.log(res);
-    await navigateTo("/dashboard");
+    await navigateTo("/auth/2FA/ActivationTwoFactorAuthentication");
   } catch (error) {
     console.log(error.response?._data);
     if (error.response?._data?.errors) {
