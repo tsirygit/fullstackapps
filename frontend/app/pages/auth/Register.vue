@@ -90,7 +90,9 @@
 <script setup>
 import { ref } from "vue";
 
-const { fetchUser} = useAuth();
+const { fetchUser } = useAuth();
+
+const { $api } = useNuxtApp();
 
 const form = ref({
   name: "",
@@ -117,20 +119,13 @@ async function handleSubmit() {
   };
 
   try {
-    await $fetch(`${config.public.apiBase}/csrf-cookie`, {
+    await $api("/api", {
       method: "GET",
-      credentials: "include",
     });
-    const token = useCookie("XSRF-TOKEN").value;
 
-    const res = await $fetch(`${config.public.apiBase}/register`, {
+    const res = await $api("/register", {
       method: "POST",
       body: form.value,
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "X-XSRF-TOKEN": token,
-      },
     });
 
     await fetchUser();
