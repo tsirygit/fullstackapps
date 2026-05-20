@@ -61,6 +61,8 @@
 <script setup>
 import { ref } from "vue";
 
+const { fetchUser } = useAuth();
+
 const form = ref({
   email: "",
   password: "",
@@ -96,8 +98,11 @@ async function handleSubmit() {
       },
     });
 
+    await fetchUser();
+
     console.log(res);
-    await navigateTo("/auth/2FA/ActivationTwoFactorAuthentication");
+
+    await navigateTo("/dashboard");
   } catch (error) {
     console.log(error.response?._data);
     if (error.response?._data?.errors) {

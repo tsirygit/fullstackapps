@@ -7,7 +7,7 @@
       <form @submit.prevent="handleSubmit">
         <div class="mb-4">
           <input
-              class="p-2 border outline-1 w-full rounded-lg"
+            class="p-2 border outline-1 w-full rounded-lg"
             v-model="form.email"
             type="email"
             placeholder="Email Address"

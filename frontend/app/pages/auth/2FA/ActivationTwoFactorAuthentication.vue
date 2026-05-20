@@ -47,6 +47,7 @@ async function startActivation() {
 
 async function activateTwoFactor() {
   const token = useCookie("XSRF-TOKEN");
+
   try {
     const res = await $fetch(
       "http://localhost:8000/api/user/two-factor-authentication",
@@ -57,11 +58,15 @@ async function activateTwoFactor() {
           Accept: "application/json",
           "X-XSRF-TOKEN": token.value,
         },
-      },
+      }
     );
 
     enable.value = true;
+
     modalpassword.value = false;
+
+    await navigateTo('/auth/2FA/TwoFactorQrcode');
+
     console.log("2FA Activé avec succès", res);
   } catch (error) {
     console.error("Erreur activation 2FA", error.response?._data);

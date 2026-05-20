@@ -1,17 +1,13 @@
-export default defineNuxtRouteMiddleware(async () => {
+export default defineNuxtPlugin(async () => {
+  const user = useState("user", () => null);
 
   try {
-
-    const { data } = await useFetch('http://localhost:8000/api/user', {
-      credentials: 'include',
+    const data = await $fetch("http://localhost:8000/api/user", {
+      credentials: "include",
     });
 
-    if (!data.value) {
-      return navigateTo('/auth/login');
-    }
-
-  } catch (e) {
-    return navigateTo('/auth/login');
+    user.value = data;
+  } catch {
+    user.value = null;
   }
-
 });
