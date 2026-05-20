@@ -43,7 +43,13 @@
           >
             {{ erreur.message }}
           </div>
-
+          <div class="flex justify-end">
+            <NuxtLink to="/auth/ForgotPassword"
+              ><p class="text-meduim text-black font-bold">
+                forgot Password?
+              </p></NuxtLink
+            >
+          </div>
           <div class="mt-6">
             <button
               class="bg-blue-600 text-white p-2 w-full font-semibold rounded-xl"

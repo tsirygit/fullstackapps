@@ -90,6 +90,8 @@
 <script setup>
 import { ref } from "vue";
 
+const { fetchUser} = useAuth();
+
 const form = ref({
   name: "",
   email: "",
@@ -130,6 +132,8 @@ async function handleSubmit() {
         "X-XSRF-TOKEN": token,
       },
     });
+
+    await fetchUser();
 
     await navigateTo("/auth/emailverification");
 
