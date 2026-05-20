@@ -74,8 +74,9 @@
 </template>
 <script setup>
 import { ref } from "vue";
-
 const { fetchUser } = useAuth();
+
+const { $api } = useNuxtApp();
 
 const route = useRoute();
 
@@ -102,20 +103,13 @@ async function handleSubmit() {
   };
 
   try {
-    await $fetch("http://localhost:8000/api/csrf-cookie", {
+    await $api("/csrf-cookie", {
       method: "GET",
-      credentials: "include",
     });
-    const token = useCookie("XSRF-TOKEN").value;
 
-    const res = await $fetch("http://localhost:8000/api/reset-password", {
+    const res = await $api("reset-password", {
       method: "POST",
       body: form.value,
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "X-XSRF-TOKEN": token,
-      },
     });
 
     await fetchUser();

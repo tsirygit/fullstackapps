@@ -35,6 +35,10 @@
 <script setup>
 import { ref } from "vue";
 
+const { fetchUser } = useAuth();
+
+const { $api } = useNuxtApp();
+
 definePageMeta({
   middleware: ["auth"],
 });
@@ -55,22 +59,13 @@ async function handleSubmit() {
   };
 
   try {
-    const token = useCookie("XSRF-TOKEN");
-
-    const res = await $fetch(
-      "http://localhost:8000/api/email/verification-notification",
-      {
-        method: "POST",
-        body: form.value,
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "X-XSRF-TOKEN": token.value,
-        },
-      },
-    );
+    const res = await $api("/email/verification-notification", {
+      method: "POST",
+      body: form.value,
+    });
 
     console.log("verification d'email ", res);
+    
   } catch (error) {
     console.log(error.response?._data);
 
