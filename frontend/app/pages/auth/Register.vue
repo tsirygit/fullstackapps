@@ -117,13 +117,13 @@ async function handleSubmit() {
   };
 
   try {
-    await $fetch("http://localhost:8000/api/csrf-cookie", {
+    await $fetch(`${config.public.apiBase}/csrf-cookie`, {
       method: "GET",
       credentials: "include",
     });
     const token = useCookie("XSRF-TOKEN").value;
 
-    const res = await $fetch("http://localhost:8000/api/register", {
+    const res = await $fetch(`${config.public.apiBase}/register`, {
       method: "POST",
       body: form.value,
       credentials: "include",

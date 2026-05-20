@@ -1,8 +1,7 @@
 <template>
   <div>
     <h1>Welcome</h1>
-    <!-- La condition v-if vérifie si l'utilisateur est chargé -->
-    <span v-if="user">Bonjour, {{ user.name }}</span>
+    <span v-if="user">Bonjour, {{ user }}</span>
     <button @click="logout">Logout</button>
   </div>
 </template>
@@ -40,6 +39,9 @@ async function logout() {
       },
     });
     token.value = null;
+
+    user.value = null;
+
     console.log("Déconnecté");
     await navigateTo("/auth/login");
   } catch (error) {

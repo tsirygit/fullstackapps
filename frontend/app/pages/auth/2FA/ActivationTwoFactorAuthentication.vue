@@ -46,6 +46,7 @@ async function startActivation() {
 }
 
 async function activateTwoFactor() {
+  
   const token = useCookie("XSRF-TOKEN");
 
   try {
