@@ -67,7 +67,6 @@ async function handleSubmit() {
     await fetchUser();
 
     console.log("verification d'email ", res);
-
   } catch (error) {
     console.log(error.response?._data);
 

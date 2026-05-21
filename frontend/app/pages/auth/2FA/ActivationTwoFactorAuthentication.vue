@@ -31,6 +31,7 @@ definePageMeta({
 });
 
 const enable = ref(false);
+
 const modalpassword = ref(false);
 
 async function startActivation() {
@@ -40,6 +41,7 @@ async function startActivation() {
     });
 
     modalpassword.value = true;
+
   } catch (error) {
     console.error("Erreur CSRF", error);
   }

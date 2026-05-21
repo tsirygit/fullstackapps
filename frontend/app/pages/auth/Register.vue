@@ -119,9 +119,10 @@ async function handleSubmit() {
   };
 
   try {
-    await $api("/api", {
-      method: "GET",
-    });
+  
+      await $api("/csrf-cookie", {
+        method: "GET",
+      });
 
     const res = await $api("/register", {
       method: "POST",

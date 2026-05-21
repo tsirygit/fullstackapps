@@ -103,10 +103,7 @@ async function handleSubmit() {
   };
 
   try {
-    await $api("/csrf-cookie", {
-      method: "GET",
-    });
-
+    
     const res = await $api("reset-password", {
       method: "POST",
       body: form.value,

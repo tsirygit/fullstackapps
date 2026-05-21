@@ -39,13 +39,11 @@ const erreur = ref({ message: "" });
 
 async function verifyPassword() {
   try {
-    await $fetch("http://localhost:8000/api/csrf-cookie", {
-      credentials: "include",
+    await $api("/csrf-cookie", {
+      method: "GET",
     });
 
-    const token = useCookie("XSRF-TOKEN");
-
-    await $fetch("http://localhost:8000/api/user/confirm-password", {
+    await $api("/user/confirm-password", {
       method: "POST",
       body: form.value,
       credentials: "include",

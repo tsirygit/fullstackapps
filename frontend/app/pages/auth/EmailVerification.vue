@@ -59,13 +59,18 @@ async function handleSubmit() {
   };
 
   try {
+    await $api("/csrf-cookie", {
+      method: "GET",
+    });
+    
     const res = await $api("/email/verification-notification", {
       method: "POST",
       body: form.value,
     });
 
+    await fetchUser();
+
     console.log("verification d'email ", res);
-    
   } catch (error) {
     console.log(error.response?._data);
 
