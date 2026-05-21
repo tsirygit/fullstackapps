@@ -31,6 +31,8 @@
 <script setup>
 import { ref } from "vue";
 
+const { $api } = useNuxtApp();
+
 const emit = defineEmits(["confirmed"]);
 
 const form = ref({ password: "" });
@@ -38,6 +40,7 @@ const form = ref({ password: "" });
 const erreur = ref({ message: "" });
 
 async function verifyPassword() {
+
   try {
     await $api("/csrf-cookie", {
       method: "GET",
@@ -46,11 +49,10 @@ async function verifyPassword() {
     await $api("/user/confirm-password", {
       method: "POST",
       body: form.value,
-      credentials: "include",
-      headers: { Accept: "application/json", "X-XSRF-TOKEN": token.value },
     });
 
     emit("confirmed");
+
   } catch (error) {
     erreur.value.message = error.response?._data?.message || "password invalid";
   }

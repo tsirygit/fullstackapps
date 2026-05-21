@@ -4,6 +4,9 @@
     <span v-if="user">Bonjour, {{ user }}</span>
     <button @click="logout">Logout</button>
   </div>
+  <div>
+      <button class="p-2 bg-red-600 w-32" >Setting</button>
+  </div>
 </template>
 
 <script setup>
