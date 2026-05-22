@@ -1,34 +1,41 @@
 <template>
-  <div class="text-start mb-6 mt-8 px-2">
-    <h1 class="text-xl font-bold">Activation de two factor authentication</h1>
-    <div class="mt-6">
-      <div class="mb-2 px-2">
-        <span v-if="isEnable" class="text-green-600 font-semibold"
-          >two factor enabled</span
-        >
-        <span v-else class="text-red-600 font-semibold"
-          >two factor disabled</span
-        >
+  <div class="flex justify-center">
+    <div class="text-start mb-6 mt-8 px-2">
+      <h1 class="text-xl font-bold">Activation de two factor authentication</h1>
+      <div class="mt-6">
+        <div class="mb-2 px-2">
+          <span v-if="isEnable" class="text-green-600 font-semibold"
+            >two factor enabled</span
+          >
+          <span v-else class="text-red-600 font-semibold"
+            >two factor disabled</span
+          >
+        </div>
+        <div>
+          <button
+            @click="openPasswordModal"
+            :disabled="isEnable"
+            class="bg-blue-600 text-white p-2 w-48 font-semibold rounded-xl mr-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            type="button"
+          >
+            Enable
+          </button>
+          <button
+            @click="DesactiveTwoFactor"
+            :disabled="!isEnable"
+            class="bg-red-600 text-white p-2 w-48 font-semibold rounded-xl disabled:bg-gray-400 disabled:cursor-not-allowed"
+            type="button"
+          >
+            Disable
+          </button>
+        </div>
       </div>
-      <div>
-        <button
-          @click="openPasswordModal"
-          class="bg-blue-600 text-white p-2 w-48 font-semibold rounded-xl mr-2"
-          type="button"
-        >
-          Enable
-        </button>
-        <button
-          @click="DesactiveTwoFactor"
-          class="bg-red-600 text-white p-2 w-48 font-semibold rounded-xl"
-          type="button"
-        >
-          Disable
-        </button>
+      <div v-if="modalpassword" class="mt-4">
+        <PasswordConfirmation
+          @confirmed="activateTwoFactor"
+          @close="modalpassword = false"
+        />
       </div>
-    </div>
-    <div v-if="modalpassword" class="mt-4">
-      <PasswordConfirmation @confirmed="activateTwoFactor" />
     </div>
   </div>
 </template>
