@@ -3,8 +3,8 @@
     <div class="flex justify-center">
       <form @submit.prevent="verifyPassword" class="w-full max-w-xs">
         <div class="mb-4">
-          <span 
-            @click="closePasswordVerify" 
+          <span
+            @click="closePasswordVerify"
             class="flex justify-end text-xl text-red-600 cursor-pointer hover:text-red-800 transition"
           >
             X
@@ -49,26 +49,24 @@ const erreur = ref({ message: "" });
 const isClose = ref(false);
 
 function closePasswordVerify() {
-
   isClose.value = true;
 
   emit("close");
 }
 
 async function verifyPassword() {
+  erreur.value.message = "";
 
-  erreur.value.message = ""; 
-  
   try {
     await $api("/csrf-cookie", {
       method: "GET",
     });
-    
+
     await $api("/user/confirm-password", {
       method: "POST",
-      body: form.value, 
+      body: form.value,
     });
-    
+
     emit("confirmed");
   } catch (error) {
     erreur.value.message = error.response?._data?.message || "Password invalid";

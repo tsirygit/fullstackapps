@@ -1,16 +1,18 @@
 <template>
   <div class="flex justify-center">
     <div class="text-start mb-6 mt-8 px-2">
-      <h1 class="text-xl font-bold">Activation de two factor authentication</h1>
+      <h1 class="text-xl font-bold">
+        Activation de la double authentification (2FA)
+      </h1>
+
       <div class="mt-6">
         <div class="mb-2 px-2">
           <span v-if="isEnable" class="text-green-600 font-semibold"
-            >two factor enabled</span
+            >2FA activé</span
           >
-          <span v-else class="text-red-600 font-semibold"
-            >two factor disabled</span
-          >
+          <span v-else class="text-red-600 font-semibold">2FA désactivé</span>
         </div>
+
         <div>
           <button
             @click="openPasswordModal"
@@ -20,6 +22,7 @@
           >
             Enable
           </button>
+
           <button
             @click="DesactiveTwoFactor"
             :disabled="!isEnable"
@@ -30,11 +33,16 @@
           </button>
         </div>
       </div>
+
       <div v-if="modalpassword" class="mt-4">
         <PasswordConfirmation
           @confirmed="activateTwoFactor"
           @close="modalpassword = false"
         />
+      </div>
+
+      <div v-if="isQrCodeVisible" class="mt-6">
+        <TwoFactorQrCode />
       </div>
     </div>
   </div>
@@ -43,6 +51,7 @@
 <script setup>
 import { ref } from "vue";
 import PasswordConfirmation from "~/pages/components/PasswordConfirmation.vue";
+import TwoFactorQrCode from "~/pages/components/2FA/TwoFactorQrCode.vue";
 
 const { $api } = useNuxtApp();
 
@@ -53,6 +62,8 @@ definePageMeta({
 const isEnable = ref(false);
 
 const modalpassword = ref(false);
+
+const isQrCodeVisible = ref(false);
 
 function openPasswordModal() {
   modalpassword.value = true;
@@ -67,6 +78,7 @@ async function DesactiveTwoFactor() {
       },
     );
     isEnable.value = false;
+    isQrCodeVisible.value = false;
     console.log("2FA est désactivé avec succès", res);
   } catch (error) {
     console.error("Erreur désactivation de 2FA", error.response?._data);
@@ -84,6 +96,8 @@ async function activateTwoFactor() {
     isEnable.value = true;
 
     modalpassword.value = false;
+
+    isQrCodeVisible.value = true;
 
     console.log("2FA Activé avec succès", res);
   } catch (error) {
