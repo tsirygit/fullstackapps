@@ -8,9 +8,9 @@
       <div class="mt-6">
         <div class="mb-2 px-2">
           <span v-if="isEnable" class="text-green-600 font-semibold"
-            >2FA activé</span
+            >2FA Enable</span
           >
-          <span v-else class="text-red-600 font-semibold">2FA désactivé</span>
+          <span v-else class="text-red-600 font-semibold">2FA Disable</span>
         </div>
 
         <div>
@@ -78,7 +78,9 @@ async function DesactiveTwoFactor() {
       },
     );
     isEnable.value = false;
+
     isQrCodeVisible.value = false;
+
     console.log("2FA est désactivé avec succès", res);
   } catch (error) {
     console.error("Erreur désactivation de 2FA", error.response?._data);

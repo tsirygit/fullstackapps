@@ -14,8 +14,11 @@ const { fetchUser } = useAuth();
 
 const qrCodeSvg = ref("");
 
-async function twoFactorQrCode() {
+const recoveryCode = ref("");
+
+async function twoFactorInformation() {
   await fetchUser();
+
   try {
     const responseQr = await $api("user/two-factor-qr-code", {
       method: "GET",
@@ -24,13 +27,20 @@ async function twoFactorQrCode() {
     if (responseQr && responseQr.svg) {
       qrCodeSvg.value = responseQr.svg;
     }
-    
+
+    const responseRecoveryCode = await $api("/user/two-factor-recovery-codes", {
+      method: "GET",
+    });
+
+    if (responseRecoveryCode) {
+      recoveryCode.value = responseRecoveryCode;
+    }
   } catch (error) {
     console.error("Erreur lors de la récupération du QR code", error);
   }
 }
 
 onMounted(() => {
-  twoFactorQrCode();
+  twoFactorInformation();
 });
 </script>
