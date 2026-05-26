@@ -49,21 +49,47 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import PasswordConfirmation from "~/pages/components/PasswordConfirmation.vue";
 import TwoFactorQrCode from "~/pages/components/2FA/TwoFactorQrCode.vue";
 
 const { $api } = useNuxtApp();
+
+const { user, fetchUser } = useAuth();
 
 definePageMeta({
   middleware: ["auth"],
 });
 
 const isEnable = ref(false);
-
 const modalpassword = ref(false);
-
 const isQrCodeVisible = ref(false);
+
+onMounted(async () => {
+  try {
+    await fetchUser();
+
+    const currentUser = user?.value || user;
+
+    if (
+      currentUser &&
+      (currentUser.two_factor_secret || currentUser.two_factor_enabled)
+    ) {
+      isEnable.value = true;
+
+      isQrCodeVisible.value = true;
+
+      
+    } else {
+      isEnable.value = false;
+    }
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération de l'état 2FA au rechargement",
+      error,
+    );
+  }
+});
 
 function openPasswordModal() {
   modalpassword.value = true;
@@ -78,9 +104,7 @@ async function DesactiveTwoFactor() {
       },
     );
     isEnable.value = false;
-
     isQrCodeVisible.value = false;
-
     console.log("2FA est désactivé avec succès", res);
   } catch (error) {
     console.error("Erreur désactivation de 2FA", error.response?._data);
@@ -96,11 +120,8 @@ async function activateTwoFactor() {
       },
     );
     isEnable.value = true;
-
     modalpassword.value = false;
-
     isQrCodeVisible.value = true;
-
     console.log("2FA Activé avec succès", res);
   } catch (error) {
     console.error("Erreur activation 2FA", error.response?._data);

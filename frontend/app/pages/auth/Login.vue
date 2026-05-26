@@ -95,15 +95,17 @@ async function handleSubmit() {
     });
     
     const res = await $api("/login", {
+      
       method: "POST",
       body: form.value,
     });
 
     await fetchUser();
 
+
     console.log(res);
 
-  
+    
     await navigateTo("/auth/2FA/ActivationTwoFactorAuthentication");
 
   } catch (error) {
