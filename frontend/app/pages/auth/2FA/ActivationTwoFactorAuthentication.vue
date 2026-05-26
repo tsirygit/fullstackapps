@@ -78,8 +78,6 @@ onMounted(async () => {
       isEnable.value = true;
 
       isQrCodeVisible.value = true;
-
-      
     } else {
       isEnable.value = false;
     }

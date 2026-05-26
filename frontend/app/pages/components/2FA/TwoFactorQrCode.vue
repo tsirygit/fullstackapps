@@ -6,6 +6,14 @@
 
     <p v-else class="text-gray-500">Chargement du QR Code...</p>
   </div>
+  <div mb-4>
+    <p>
+      entre to confirm the code 6 chiffres
+      <span class="text-indigo-600 font-bold ml-2"
+        ><NuxtLink to="/auth/2FA/TwoFactorChallenge">Confirm?</NuxtLink>
+      </span>
+    </p>
+  </div>
 </template>
 
 <script setup>
