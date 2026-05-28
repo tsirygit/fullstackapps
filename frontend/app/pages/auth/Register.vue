@@ -73,13 +73,22 @@
           >
             {{ erreur.message }}
           </div>
-
+          <div class="mt-4">
+            <p class="text-end">you have already an account??</p>
+          </div>
+          <div class="flex justify-end mt-4">
+            <NuxtLink to="/auth/login"
+              ><p class="text-meduim text-indigo-600 font-bold">
+                login now ?
+              </p></NuxtLink
+            >
+          </div>
           <div class="mt-6">
             <button
               class="bg-blue-600 text-white p-2 w-full font-semibold rounded-xl"
               type="submit"
             >
-              login
+              Register
             </button>
           </div>
         </form>
@@ -119,10 +128,9 @@ async function handleSubmit() {
   };
 
   try {
-  
-      await $api("/csrf-cookie", {
-        method: "GET",
-      });
+    await $api("/csrf-cookie", {
+      method: "GET",
+    });
 
     const res = await $api("/register", {
       method: "POST",
@@ -133,7 +141,7 @@ async function handleSubmit() {
 
     await navigateTo("/auth/emailverification");
 
-    console.log("Utilisateur créé !", res);
+    console.log(res);
   } catch (error) {
     console.log(error.response?._data);
 

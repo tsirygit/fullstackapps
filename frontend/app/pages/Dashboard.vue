@@ -22,9 +22,7 @@ const user = useState("user", () => null);
 
 async function fetchUserInfo() {
   try {
-    
     await fetchUser();
-
   } catch (error) {
     console.error("Erreur de récupération:", error);
   }

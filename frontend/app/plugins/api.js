@@ -6,7 +6,6 @@ export default defineNuxtPlugin(() => {
     credentials: "include",
 
     async onRequest({ options }) {
-      
       const token = useCookie("XSRF-TOKEN");
 
       if (token.value) {

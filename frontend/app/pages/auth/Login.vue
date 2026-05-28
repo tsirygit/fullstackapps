@@ -60,6 +60,13 @@
           </div>
         </form>
       </div>
+      <div class="flex justify-center mt-4">
+        <NuxtLink to="/auth/register"
+          ><p class="text-meduim text-indigo-600 font-bold">
+            Create new Account?
+          </p></NuxtLink
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -95,28 +102,21 @@ async function handleSubmit() {
     });
 
     const res = await $api("/login", {
-
       method: "POST",
 
       body: form.value,
     });
 
-     await fetchUser();
+    await fetchUser();
 
-    if ( res.two_factor === true) {
+    if (res.two_factor === true) {
       return navigateTo("/auth/2FA/TwoFactorChallenge");
-      
     } else {
-      
-      return navigateTo('/auth/2FA/ActivationTwoFactorAuthentication');
+      return navigateTo("/auth/2FA/ActivationTwoFactorAuthentication");
     }
 
-    
-
     console.log(res);
-    
   } catch (error) {
-
     console.log(error.response?._data);
     if (error.response?._data?.errors) {
       erreur.value = {

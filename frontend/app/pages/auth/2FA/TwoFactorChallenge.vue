@@ -5,8 +5,10 @@
         <h1 class="text-2xl font-bold">Entrer le code à 6 chiffres</h1>
       </div>
 
-   
-      <div v-if="erreur.message" class="mb-4 p-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold text-center">
+      <div
+        v-if="erreur.message"
+        class="mb-4 p-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold text-center"
+      >
         {{ erreur.message }}
       </div>
 
@@ -22,11 +24,14 @@
             placeholder="000000"
             id="code"
           />
-          <span v-if="erreur.code" class="text-sm font-semibold text-red-400 block mt-1">
+          <span
+            v-if="erreur.code"
+            class="text-sm font-semibold text-red-400 block mt-1"
+          >
             {{ erreur.code[0] }}
           </span>
         </div>
-        
+
         <div class="mt-6">
           <button
             class="bg-blue-600 text-white p-2 w-full font-semibold rounded-2xl hover:bg-blue-700 transition"
@@ -61,22 +66,18 @@ const erreur = ref({
 });
 
 async function handleSubmit() {
-
   erreur.value = { code: [], message: "" };
-  
+
   try {
-    
     await $api("/csrf-cookie", { method: "GET" });
 
     await $api("/two-factor-challenge", {
       method: "POST",
-      body: form.value, 
+      body: form.value,
     });
 
-    navigateTo('/dashboard'); 
-    
+    navigateTo("/dashboard");
   } catch (error) {
-
     if (error.response?._data?.errors) {
       erreur.value.code = error.response._data.errors.code || [];
     } else {
@@ -84,5 +85,4 @@ async function handleSubmit() {
     }
   }
 }
-
 </script>
