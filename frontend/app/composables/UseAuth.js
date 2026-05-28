@@ -10,6 +10,7 @@ export const useAuth = () => {
       user.value = data;
 
       return data;
+      
     } catch {
       user.value = null;
     }

@@ -6,6 +6,9 @@
 
     <p v-else class="text-gray-500">Chargement du QR Code...</p>
   </div>
+  <div v-if=" recoveryCode.length > 0">
+      <ul> {{  recoveryCode }}</ul>
+  </div>
   <div mb-4>
     <p>
       entre to confirm the code 6 chiffres
@@ -20,6 +23,7 @@
 import { ref, onMounted } from "vue";
 
 const { $api } = useNuxtApp();
+
 const { fetchUser } = useAuth();
 
 const qrCodeSvg = ref("");
@@ -42,7 +46,7 @@ async function twoFactorInformation() {
       method: "GET",
     });
 
-    if (responseRecoveryCode) {
+    if (Array.isArray(responseRecoveryCode)) {
       recoveryCode.value = responseRecoveryCode;
     }
   } catch (error) {

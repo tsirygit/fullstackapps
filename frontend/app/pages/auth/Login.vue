@@ -93,20 +93,22 @@ async function handleSubmit() {
     await $api("/csrf-cookie", {
       method: "GET",
     });
-    
+
     const res = await $api("/login", {
       method: "POST",
       body: form.value,
     });
 
+    if (res.two_factor === true) {
+      return navigateTo("/auth/2FA/TwoFactorChallenge");
+    }
+
     await fetchUser();
 
     console.log(res);
-
-  
-    await navigateTo("/auth/2FA/ActivationTwoFactorAuthentication");
-
+    
   } catch (error) {
+    
     console.log(error.response?._data);
     if (error.response?._data?.errors) {
       erreur.value = {

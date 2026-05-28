@@ -5,7 +5,7 @@
         <h1 class="text-2xl font-bold">Entrer le code à 6 chiffres</h1>
       </div>
 
-      <!-- Affichage de l'erreur générale si Fortify rejette le code -->
+   
       <div v-if="erreur.message" class="mb-4 p-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold text-center">
         {{ erreur.message }}
       </div>
@@ -17,12 +17,11 @@
             v-model="form.code"
             type="text"
             inputmode="numeric"
-            pattern="[0-8]*"
+            pattern="[0-9]*"
             maxlength="6"
             placeholder="000000"
             id="code"
           />
-          <!-- Affichage de l'erreur de validation du champ code -->
           <span v-if="erreur.code" class="text-sm font-semibold text-red-400 block mt-1">
             {{ erreur.code[0] }}
           </span>
@@ -45,13 +44,13 @@
 import { ref } from "vue";
 
 const { fetchUser } = useAuth();
+
 const { $api } = useNuxtApp();
 
 definePageMeta({
   middleware: ["auth"],
 });
 
-// Fortify attend obligatoirement le nom "code"
 const form = ref({
   code: "",
 });
@@ -62,27 +61,22 @@ const erreur = ref({
 });
 
 async function handleSubmit() {
-  // Réinitialisation des erreurs
+
   erreur.value = { code: [], message: "" };
   
   try {
-    // 1. Initialisation du cookie CSRF (requis par Fortify)
+    
     await $api("/csrf-cookie", { method: "GET" });
 
-    // 2. Envoi du code. Fortify va intercepter et renvoyer un statut 204 si c'est correct
     await $api("/two-factor-challenge", {
       method: "POST",
-      body: form.value, // Contient { code: '...' } ou { recovery_code: '...' }
+      body: form.value, 
     });
 
-    // 3. Le code est bon (204 reçu) : On rafraîchit l'état de l'utilisateur dans Nuxt
-    await fetchUser();
-    
-    // 4. Redirection manuelle puisque Fortify ne le fait pas pour les requêtes XHR
     navigateTo('/dashboard'); 
     
   } catch (error) {
-    // Gestion des erreurs d'authentification (ex: code expiré ou incorrect)
+
     if (error.response?._data?.errors) {
       erreur.value.code = error.response._data.errors.code || [];
     } else {
