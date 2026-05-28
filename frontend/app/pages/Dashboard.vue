@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Welcome</h1>
-    <span v-if="user">Bonjour, {{ user/name }}</span>
+    <span v-if="user">Bonjour, {{ user.name }}</span>
     <button @click="logout">Logout</button>
   </div>
   <div>

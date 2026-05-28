@@ -95,20 +95,28 @@ async function handleSubmit() {
     });
 
     const res = await $api("/login", {
+
       method: "POST",
+
       body: form.value,
     });
 
-    if (res.two_factor === true) {
+     await fetchUser();
+
+    if ( res.two_factor === true) {
       return navigateTo("/auth/2FA/TwoFactorChallenge");
+      
+    } else {
+      
+      return navigateTo('/auth/2FA/ActivationTwoFactorAuthentication');
     }
 
-    await fetchUser();
+    
 
     console.log(res);
     
   } catch (error) {
-    
+
     console.log(error.response?._data);
     if (error.response?._data?.errors) {
       erreur.value = {

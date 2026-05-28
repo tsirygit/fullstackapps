@@ -16,7 +16,7 @@
         <div>
           <button
             @click="openPasswordModal"
-            
+            :disabled="isEnable"
             class="bg-blue-600 text-white p-2 w-48 font-semibold rounded-xl mr-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
             type="button"
           >
@@ -25,7 +25,7 @@
 
           <button
             @click="DesactiveTwoFactor"
-           
+            :disabled="!isEnable"
             class="bg-red-600 text-white p-2 w-48 font-semibold rounded-xl disabled:bg-gray-400 disabled:cursor-not-allowed"
             type="button"
           >
@@ -102,11 +102,8 @@ async function DesactiveTwoFactor() {
       },
     );
     isEnable.value = false;
-
     isQrCodeVisible.value = false;
-
     console.log("2FA est désactivé avec succès", res);
-    
   } catch (error) {
     console.error("Erreur désactivation de 2FA", error.response?._data);
   }
@@ -119,13 +116,11 @@ async function activateTwoFactor() {
       {
         method: "POST",
       },
+      
     );
     isEnable.value = true;
-
     modalpassword.value = false;
-
     isQrCodeVisible.value = true;
-
     console.log("2FA Activé avec succès", res);
   } catch (error) {
     console.error("Erreur activation 2FA", error.response?._data);
