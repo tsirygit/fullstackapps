@@ -63,7 +63,6 @@ async function handleSubmit() {
     });
 
     console.log("verification d'email ", res);
-
   } catch (error) {
     console.log(error.response?._data);
 

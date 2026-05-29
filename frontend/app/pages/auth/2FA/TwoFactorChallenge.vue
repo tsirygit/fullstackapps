@@ -79,7 +79,6 @@ async function handleSubmit() {
     await fetchUser();
 
     navigateTo("/dashboard");
-    
   } catch (error) {
     if (error.response?._data?.errors) {
       erreur.value.code = error.response._data.errors.code || [];

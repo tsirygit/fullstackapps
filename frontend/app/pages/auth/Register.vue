@@ -139,9 +139,10 @@ async function handleSubmit() {
 
     await fetchUser();
 
-    await navigateTo("/auth/emailverification");
+    form.value = { name: "", email: "", password: "", password_confirmation: "" };
 
     console.log(res);
+
   } catch (error) {
     console.log(error.response?._data);
 
