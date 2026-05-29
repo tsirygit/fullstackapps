@@ -114,8 +114,6 @@ async function handleSubmit() {
     } else {
       return navigateTo("/auth/2FA/ActivationTwoFactorAuthentication");
     }
-
-    console.log(res);
   } catch (error) {
     console.log(error.response?._data);
     if (error.response?._data?.errors) {

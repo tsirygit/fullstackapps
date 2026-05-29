@@ -27,10 +27,10 @@ class AppServiceProvider extends ServiceProvider
         });
         
 
-        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+        // VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
 
-            return config('app.frontend_url') . '/auth/EmailVerification' . urlencode($url);
-        });
+        //     return config('app.frontend_url') . '/auth/EmailVerification' . urlencode($url);
+        // });
 
         
     }

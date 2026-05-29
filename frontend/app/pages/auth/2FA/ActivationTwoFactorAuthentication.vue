@@ -49,45 +49,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import PasswordConfirmation from "~/pages/components/PasswordConfirmation.vue";
 import TwoFactorQrCode from "~/pages/components/2FA/TwoFactorQrCode.vue";
 
 const { $api } = useNuxtApp();
-
-const { user, fetchUser } = useAuth();
 
 definePageMeta({
   middleware: ["auth"],
 });
 
 const isEnable = ref(false);
+
 const modalpassword = ref(false);
+
 const isQrCodeVisible = ref(false);
-
-onMounted(async () => {
-  try {
-    await fetchUser();
-
-    const currentUser = user?.value || user;
-
-    if (
-      currentUser &&
-      (currentUser.two_factor_secret || currentUser.two_factor_enabled)
-    ) {
-      isEnable.value = true;
-
-      isQrCodeVisible.value = true;
-    } else {
-      isEnable.value = false;
-    }
-  } catch (error) {
-    console.error(
-      "Erreur lors de la récupération de l'état 2FA au rechargement",
-      error,
-    );
-  }
-});
 
 function openPasswordModal() {
   modalpassword.value = true;
@@ -116,10 +92,11 @@ async function activateTwoFactor() {
       {
         method: "POST",
       },
-      
     );
     isEnable.value = true;
+
     modalpassword.value = false;
+
     isQrCodeVisible.value = true;
     console.log("2FA Activé avec succès", res);
   } catch (error) {

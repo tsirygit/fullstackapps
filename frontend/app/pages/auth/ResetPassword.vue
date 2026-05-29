@@ -74,7 +74,6 @@
 </template>
 <script setup>
 import { ref } from "vue";
-const { fetchUser } = useAuth();
 
 const { $api } = useNuxtApp();
 
@@ -109,9 +108,7 @@ async function handleSubmit() {
       body: form.value,
     });
 
-    await fetchUser();
-
-    await navigateTo("/auth/emailverification");
+    await navigateTo("/auth/login");
 
     console.log("Utilisateur créé !", res);
   } catch (error) {

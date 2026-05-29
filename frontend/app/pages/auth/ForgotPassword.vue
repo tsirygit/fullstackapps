@@ -35,8 +35,6 @@
 <script setup>
 import { ref } from "vue";
 
-const { fetchUser } = useAuth();
-
 const { $api } = useNuxtApp();
 
 const form = ref({
@@ -64,9 +62,8 @@ async function handleSubmit() {
       body: form.value,
     });
 
-    await fetchUser();
-
     console.log("verification d'email ", res);
+
   } catch (error) {
     console.log(error.response?._data);
 

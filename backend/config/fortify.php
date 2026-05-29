@@ -73,7 +73,8 @@ return [
     |
     */
 
-    'home' => '/home',
+    'home' => config('app.frontend_url') . '/auth/EmailVerificationStatus?status=success',
+
 
     /*
     |--------------------------------------------------------------------------

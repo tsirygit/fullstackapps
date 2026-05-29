@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return array<string, string>
      */
 
-    protected $appends = ['two_factor_enabled'];
 
     protected function casts(): array
     {
@@ -36,8 +35,5 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function getTwoFactorEnabledAttribute()
-    {
-        return ! is_null($this->two_factor_secret);
-    }
+ 
 }
